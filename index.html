@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>error</title>
+    <link id="favicon" rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='blue'/></svg><svg width='65' height='65' viewBox='0 0 65 65' fill='none' xmlns='http://www.w3.org/2000/svg'><rect width='65' height='65' rx='32.5' fill='#008000'/></svg>">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #404040;
+        }
+        
+        #container {
+            text-align: center;
+            background: #404040;
+            padding: 40px;
+            border-radius: 10px;
+        }
+        
+        div {
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="timer">+ 0</div>
+        <div id="setting" style="color:yellow">Work</div>
+        <div id="mins" style="color:#808080;">T + 0</div>
+        <div style='margin-top:40px;'></div>
+        <div id="phaseButtons" style="font-size:20px;">
+            <span onclick="setPhase('work')" style="cursor:pointer;color:#ffffff;margin: 0 10px;">Work</span>
+            <span onclick="setPhase('neutral')" style="cursor:pointer;color:#808080;margin: 0 10px;">None</span>
+            <span onclick="setPhase('fun')" style="cursor:pointer;color:#808080;margin: 0 10px;">Fun</span>
+        </div>
+        <div id="modifyButtons" style="font-size: 20px;">
+            <span onclick="change(-300)" style="cursor:pointer;color:#808080;margin: 0 10px;">Extra work</span>
+            <span onclick="change(300)" style="cursor:pointer;color:#808080;margin: 0 10px;">Extra fun</span>
+        </div>
+    </div>
+
+    <! SCRIPT STARTS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!>
+    <script>
+        const setting = document.getElementById('setting');
+        const timer = document.getElementById('timer');
+        const mins = document.getElementById('mins');
+        const favicon = document.getElementById('favicon');
+        let count = 0;
+        let phase = "work";
+        let time = 0;
+        
+
+        function setPhase(newPhase) {
+            phase = newPhase;
+            
+            // start of otehr programer code
+            const buttons = document.querySelectorAll('#phaseButtons span');
+            buttons.forEach(btn => btn.style.color = "#808080");
+            event.target.style.color = "rgb(255,255,255)";
+            // end of other programer code
+            
+            time = 0;
+
+            
+        }
+
+        function change( a ) {
+            count += a;
+            time += Math.abs(a)
+        }
+
+        setInterval(() => {
+            time += 1;
+
+            if (phase === "fun") {
+                count += 2;
+            } else if (phase === "work") {
+                count -= 1;
+            }
+
+            if (phase === "work") {
+                setting.textContent = "Work";
+                document.title = "Working"
+                setting.style.color = "rgb(255,255,0)";
+                favicon.href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='blue'/></svg><svg width='65' height='65' viewBox='0 0 65 65' fill='none' xmlns='http://www.w3.org/2000/svg'><rect width='65' height='65' rx='32.5' fill='#ffff00'/></svg>";
+            } else if (phase === "fun") {
+                setting.textContent = "Fun";
+                document.title = "Having Fun"
+                setting.style.color = "rgb(0,255,255)";
+                favicon.href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='blue'/></svg><svg width='65' height='65' viewBox='0 0 65 65' fill='none' xmlns='http://www.w3.org/2000/svg'><rect width='65' height='65' rx='32.5' fill='#00ffff'/></svg>";
+            } else if (phase === "neutral") {
+                setting.textContent = "Neutral";
+                document.title = 'Doing Nothing'
+                setting.style.color = "rgb(0,255,0)";
+                favicon.href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='blue'/></svg><svg width='65' height='65' viewBox='0 0 65 65' fill='none' xmlns='http://www.w3.org/2000/svg'><rect width='65' height='65' rx='32.5' fill='#008000'/></svg>";
+            }
+            
+            if (count < 0) {
+                timer.textContent = "- " + (count * -1);
+            } else {
+                timer.textContent = "+ " + count;
+            }
+            if (count < -2400) {
+                timer.style.color = "rgb(255,255,0)";
+                document.title += " : " + "- - -";
+            } else if (count < -1200) {
+                timer.style.color = "rgb(255,255,80)";
+                document.title += " : " + "- -";
+            } else if (count <= -300) {
+                timer.style.color = "rgb(255,255,170)";
+                document.title += " : " + "-";
+            } else if (count < 300) {
+                timer.style.color = "rgb(255,255,255)";
+                document.title += " : " + "";
+            } else if (count < 1200) {
+                timer.style.color = "rgb(170,255,255)";
+                document.title += " : " + "+";
+            } else if (count < 2400) {
+                timer.style.color = "rgb(80,255,255)";
+                document.title += " : " + "+ +";
+            } else {
+                timer.style.color = "rgb(0,255,255)";
+                document.title += " : " + "+ + +";
+            }
+
+            let aaa = Math.round( ( time / 60 ) - .5 );
+            mins.textContent = "T + " + aaa;
+        }, 1000);
+    </script>
+</body>
