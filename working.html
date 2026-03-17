@@ -31,12 +31,18 @@
             color: #fff;
             margin: 10px 0;
         }
+
+        @keyframes flash {
+            0% { opacity: 1; }
+            50% { opacity: .5; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
     <div id="container">
         <div id="timer">+ 0</div>
-        <div id="setting" style="color:yellow">Work</div>
+        <div id="setting" style="font-size:70px;color:yellow;animation: flash 2s infinite;">Work</div>
         <div id="mins" style="color:#808080;">T + 0</div>
         <div style='margin-top:40px;'></div>
         <div id="phaseButtons" style="font-size:20px;">
