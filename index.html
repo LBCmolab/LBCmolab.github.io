@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>My Simple App</title>
+      <style>
+          body {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              height: 100vh;
+              margin: 0;
+              background: linear-gradient(to right, #004000, #004040);
+          }
+          .container {
+              text-align: center;
+              padding: 20px;
+              border: 5px solid #008048;
+              border-radius: 30px;
+              background-color: none;
+          }
+          .site-name {
+              font-size: 34px;
+              margin-bottom: 10px;
+              color: #00ff90;
+              font-weight: bold;
+          }
+          .button {
+              display: inline-block;
+              padding: 15px 30px;
+              margin: 10px;
+              border: solid;
+              border-color: #008048;
+              border-radius: 25px;
+              background-color: #008048;
+              color: white;
+              text-decoration: none;
+              font-size: 16px;
+          }
+          .button:hover {
+              animation: flash .5s infinite;
+          }
+          
+          @keyframes flash {
+              0% { border-color: #008048; }
+              50% { border-color: #00ff90; }
+              100% { border-color: #008048; }
+          }
+      </style>
+  </head>
+  <body>
+      <div class="container">
+          <div class="site-name">LBCmolab</div>
+          <a href="index.html" class="button">Working</a>
+          <a href="working.html" class="button">Music</a>
+      </div>
+  </body>
+</html>
