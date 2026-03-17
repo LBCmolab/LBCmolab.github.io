@@ -112,26 +112,19 @@
                 timer.textContent = "+ " + count;
             }
             if (count < -2400) {
-                timer.style.color = "rgb(255,255,0)";
-                document.title += " : " + "- - -";
+                timer.style.color = "rgb(255,0,0)";
             } else if (count < -1200) {
-                timer.style.color = "rgb(255,255,80)";
-                document.title += " : " + "- -";
+                timer.style.color = "rgb(170,0,0)";
             } else if (count <= -300) {
-                timer.style.color = "rgb(255,255,170)";
-                document.title += " : " + "-";
+                timer.style.color = "rgb(80,0,0)";
             } else if (count < 300) {
-                timer.style.color = "rgb(255,255,255)";
-                document.title += " : " + "";
+                timer.style.color = "rgb(0,0,0)";
             } else if (count < 1200) {
-                timer.style.color = "rgb(170,255,255)";
-                document.title += " : " + "+";
+                timer.style.color = "rgb(80,0,0)";
             } else if (count < 2400) {
-                timer.style.color = "rgb(80,255,255)";
-                document.title += " : " + "+ +";
+                timer.style.color = "rgb(170,0,0)";
             } else {
-                timer.style.color = "rgb(0,255,255)";
-                document.title += " : " + "+ + +";
+                timer.style.color = "rgb(255,0,0)";
             }
 
             let aaa = Math.round( ( time / 60 ) - .5 );
