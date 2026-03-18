@@ -43,7 +43,7 @@
                     const data = await response.text();
                     document.getElementById('output').innerHTML = data;
                 } else {
-                    document.getElementById('output').innerHTML = `<a style="color:red;">Oops! The program failed to get the data. Here is the crash information: ${response.status} - ${await response.text()}}</a>`;
+                    document.getElementById('output').innerHTML = `<a style="color:red;">Oops! The program failed to get the data. Here is the crash information: ${await response.text()}}</a>`;
                 }
             }
             
