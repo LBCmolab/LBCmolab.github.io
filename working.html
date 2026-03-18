@@ -41,12 +41,16 @@
 </head>
 <body>
     <div id="container">
-        <div id="timer">+ 0</div>
-        <div id="setting" style="font-size:70px;color:yellow;animation: flash 2s infinite;">Work</div>
-        <div id="mins" style="color:#808080;">T + 0</div>
+        <div id="setting" style="font-size:70px;color:#ffffff;animation: flash 2s infinite;">- - -</div>
+        <div  style="color:#808080;">
+            Fun:
+            <a id="funout" style="color:#808000;">-</a>,
+            Work:
+            <a id="workout" style="color:#008080;">-</a>
+        </div>
         <div style='margin-top:40px;'></div>
         <div id="phaseButtons" style="font-size:20px;">
-            <span onclick="setPhase('work')" style="cursor:pointer;color:#ffffff;margin: 0 10px;">Work</span>
+            <span onclick="setPhase('work')" style="cursor:pointer;color:#808080;margin: 0 10px;">Work</span>
             <span onclick="setPhase('neutral')" style="cursor:pointer;color:#808080;margin: 0 10px;">None</span>
             <span onclick="setPhase('fun')" style="cursor:pointer;color:#808080;margin: 0 10px;">Fun</span>
         </div>
@@ -59,15 +63,23 @@
     <! SCRIPT STARTS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!>
     <script>
         const setting = document.getElementById('setting');
-        const timer = document.getElementById('timer');
-        const mins = document.getElementById('mins');
         const favicon = document.getElementById('favicon');
-        let count = 0;
-        let phase = "work";
-        let time = 0;
+        let work = 0;
+        let fun = 0;
+        let phase = "neutral";
+        let last = Date.now();
+        let output = "none";
         
 
         function setPhase(newPhase) {
+            
+            if ( phase === "work" ) {
+            	work += Date.now() - last;
+            } else if ( phase === "fun" ) {
+            	fun += Date.now() - last;
+            }
+            
+            last = Date.now()
             phase = newPhase;
             
             // start of otehr programer code
@@ -75,66 +87,39 @@
             buttons.forEach(btn => btn.style.color = "#808080");
             event.target.style.color = "rgb(255,255,255)";
             // end of other programer code
-            
-            time = 0;
-
-            
-        }
-
-        function change( a ) {
-            count += a;
-            time += Math.abs(a)
-        }
-
-        setInterval(() => {
-            time += 1;
-
-            if (phase === "fun") {
-                count += 2;
-            } else if (phase === "work") {
-                count -= 1;
-            }
 
             if (phase === "work") {
-                setting.textContent = "Work";
+                setting.textContent = "Working";
                 document.title = "Working"
                 setting.style.color = "rgb(255,255,0)";
                 favicon.href="yellow.svg";
             } else if (phase === "fun") {
-                setting.textContent = "Fun";
-                document.title = "Having Fun"
+                setting.textContent = "On Break";
+                document.title = "Off task"
                 setting.style.color = "rgb(0,255,255)";
                 favicon.href="cyan.svg";
             } else if (phase === "neutral") {
                 setting.textContent = "Neutral";
-                document.title = 'Doing Nothing'
+                document.title = 'Idle'
                 setting.style.color = "rgb(0,255,0)";
                 favicon.href="green.svg";
             }
-            
-            if (count < 0) {
-                timer.textContent = "- " + (count * -1);
-            } else {
-                timer.textContent = "+ " + count;
-            }
-            if (count < -2400) {
-                timer.style.color = "rgb(255,0,0)";
-            } else if (count < -1200) {
-                timer.style.color = "rgb(170,0,0)";
-            } else if (count <= -300) {
-                timer.style.color = "rgb(80,0,0)";
-            } else if (count < 300) {
-                timer.style.color = "rgb(0,0,0)";
-            } else if (count < 1200) {
-                timer.style.color = "rgb(80,0,0)";
-            } else if (count < 2400) {
-                timer.style.color = "rgb(170,0,0)";
-            } else {
-                timer.style.color = "rgb(255,0,0)";
-            }
+        }
 
-            let aaa = Math.round( ( time / 60 ) - .5 );
-            mins.textContent = "T + " + aaa;
-        }, 1000);
+        function change( a ) {
+        	if ( a < 0 ) {
+            	work -= a;
+            } else {
+            	fun += a;
+            }
+        }
+        
+        function update() {
+        	document.getElementById("funout").innerHTML = fun/1000;
+            document.getElementById("workout").innerHTML = work/1000;
+            output = `Is <a class="highlight">${Document.title}</a>, and has been for <a class="highlight">${Math.round((last-Date.now)/60000)}</a> muinutes.<br>Curenly on <a class="highlight">ERROR</a> (or window closed).<br>Total of <a class="highlight">${Math.round(work/60000)}</a> muinutes working and <a class="highlight">${Math.round(fun/60000)}</a> muinutes off-task.`;
+        }
+        
+        setInterval(update, 1000);
     </script>
 </body>
