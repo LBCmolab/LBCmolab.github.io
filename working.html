@@ -42,11 +42,16 @@
 <body>
     <div id="container">
         <div id="setting" style="font-size:70px;color:#ffffff;animation: flash 2s infinite;">- - -</div>
-        <div  style="color:#808080;">
+        <div style="color:#808080;">
             Fun:
             <a id="funout" style="color:#808000;">-</a>,
             Work:
-            <a id="workout" style="color:#008080;">-</a>
+            <a id="workout" style="color:#008080;">-</a>.
+        </div>
+        <div style="color:#808080;">
+        	<a id="rateout" style="color:#008000;">-</a>% fun.
+            Curent:
+            <a id="nowout" style="color:#008000;">-</a>.
         </div>
         <div style='margin-top:40px;'></div>
         <div id="phaseButtons" style="font-size:20px;">
@@ -59,6 +64,7 @@
             <span onclick="change(300)" style="cursor:pointer;color:#808080;margin: 0 10px;">Extra fun</span>
         </div>
     </div>
+    <a id="outer"></a>
 
     <! SCRIPT STARTS HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!>
     <script>
@@ -66,6 +72,7 @@
         const favicon = document.getElementById('favicon');
         let work = 0;
         let fun = 0;
+        let none = 0;
         let phase = "neutral";
         let last = Date.now();
         let output = "none";
@@ -77,6 +84,8 @@
             	work += Date.now() - last;
             } else if ( phase === "fun" ) {
             	fun += Date.now() - last;
+            } else if ( phase === "neutral" ) {
+            	none += Date.now() - last;
             }
             
             last = Date.now()
@@ -95,7 +104,7 @@
                 favicon.href="yellow.svg";
             } else if (phase === "fun") {
                 setting.textContent = "On Break";
-                document.title = "Off task"
+                document.title = "Taking a break"
                 setting.style.color = "rgb(0,255,255)";
                 favicon.href="cyan.svg";
             } else if (phase === "neutral") {
@@ -104,6 +113,8 @@
                 setting.style.color = "rgb(0,255,0)";
                 favicon.href="green.svg";
             }
+            
+            update()
         }
 
         function change( a ) {
@@ -115,11 +126,14 @@
         }
         
         function update() {
-        	document.getElementById("funout").innerHTML = fun/1000;
-            document.getElementById("workout").innerHTML = work/1000;
-            output = `Is <a class="highlight">${Document.title}</a>, and has been for <a class="highlight">${Math.round((last-Date.now)/60000)}</a> muinutes.<br>Curenly on <a class="highlight">ERROR</a> (or window closed).<br>Total of <a class="highlight">${Math.round(work/60000)}</a> muinutes working and <a class="highlight">${Math.round(fun/60000)}</a> muinutes off-task.`;
+        	let rate = Math.round( ( fun + ( none / 2 ) ) / ( fun + work + none ) * 100 );
+        	document.getElementById("funout").innerHTML = Math.round(fun/1000);
+            document.getElementById("workout").innerHTML = Math.round(work/1000);
+            document.getElementById("rateout").innerHTML = rate;
+            document.getElementById("nowout").innerHTML = Math.round(((Date.now()-last)/6000))/10;
+            document.getElementById("outer").innerHTML = `Is <a class="highlight">${document.title}</a>, and has been for <a class="highlight">${(Math.round(((Date.now()-last)/6000))/10)}</a> muinutes.<br>Total of <a class="highlight">${Math.round(work/6000)/10}</a> muinutes working and <a class="highlight">${Math.round(fun/6000)/10}</a> muinutes off-task.<br>They have spent <a class="highlight">${rate}</a>% of their time off task. (ideal 15-20%)`;
         }
         
-        setInterval(update, 1000);
+        setInterval(update, 3000);
     </script>
 </body>
