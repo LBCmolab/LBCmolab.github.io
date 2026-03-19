@@ -135,23 +135,20 @@
         }
 
         function putRepoData() {
-            const octokit = new Octokit({
-                auth: secrets.APIkey
-            })
+            const content = output;
+  		    const encodedContent = btoa(content);
             
-            await octokit.request('PUT /repos/LBCmolab/backend.LBCmolab.github.io/contents/workingTimerInfo.txt', {
-                owner: 'LBCmolab',
-                repo: 'backend.LBCmolab.github.io',
-                path: 'workingTimerInfo.txt',
-                message: 'API action',
-                committer: {
-                    name: 'LBCmolab',
-                    email: 'LBCmolab@duck.com'
-                },
-                content: output,
+            fetch(`https://api.github.com/repos/LBCmolab/backend.LBCmolab.github.io/contents/workingTimerInfo.txt`, {
+                method: 'PUT',
                 headers: {
-                    'X-GitHub-Api-Version': '2026-03-10'
-                }
+                    'Authorization': `token ${secrets.APIKEY}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: 'Updating file content',
+                    content: encodedContent,
+                    //sha: await getFileSHA() // Get current file SHA for updating
+                })
             })
         }
         
