@@ -43,14 +43,14 @@
     <div id="container">
         <div id="setting" style="font-size:70px;color:#ffffff;animation: flash 2s infinite;">- - -</div>
         <div style="color:#808080;">
-            Fun:
-            <a id="funout" style="color:#808000;">-</a>,
             Work:
-            <a id="workout" style="color:#008080;">-</a>.
+            <a id="workout" style="color:#808000;">-</a>,
+            Fun:
+            <a id="funout" style="color:#008080;">-</a>.
         </div>
         <div style="color:#808080;">
         	<a id="rateout" style="color:#008000;">-</a>% fun.
-            Curent:
+            Current:
             <a id="nowout" style="color:#008000;">-</a>.
         </div>
         <div style='margin-top:40px;'></div>
@@ -60,8 +60,8 @@
             <span onclick="setPhase('fun')" style="cursor:pointer;color:#808080;margin: 0 10px;">Fun</span>
         </div>
         <div id="modifyButtons" style="font-size: 20px;">
-            <span onclick="change(-300)" style="cursor:pointer;color:#808080;margin: 0 10px;">Extra work</span>
-            <span onclick="change(300)" style="cursor:pointer;color:#808080;margin: 0 10px;">Extra fun</span>
+            <span onclick="change(-300000)" style="cursor:pointer;color:#808080;margin: 0 10px;">Extra work</span>
+            <span onclick="change(300000)" style="cursor:pointer;color:#808080;margin: 0 10px;">Extra fun</span>
         </div>
     </div>
     <a id="outer"></a>
@@ -126,12 +126,21 @@
         }
         
         function update() {
-        	let rate = Math.round( ( fun + ( none / 2 ) ) / ( fun + work + none ) * 100 );
-        	document.getElementById("funout").innerHTML = Math.round(fun/1000);
-            document.getElementById("workout").innerHTML = Math.round(work/1000);
+        	let rate = Math.round( ( fun ) / ( fun + work ) * 100 );
+        	document.getElementById("funout").innerHTML = Math.round(fun/6000)/10;
+            document.getElementById("workout").innerHTML = Math.round(work/6000)/10;
             document.getElementById("rateout").innerHTML = rate;
             document.getElementById("nowout").innerHTML = Math.round(((Date.now()-last)/6000))/10;
             output = `Is <a class="highlight">${document.title}</a>, and has been for <a class="highlight">${(Math.round(((Date.now()-last)/6000))/10)}</a> muinutes.<br>Total of <a class="highlight">${Math.round(work/6000)/10}</a> muinutes working and <a class="highlight">${Math.round(fun/6000)/10}</a> muinutes off-task.<br>They have spent <a class="highlight">${rate}</a>% of their time off task. (ideal 15-20%)`;
+            if ( phase === "work" && Date.now() % 2 === 0 ) {
+                favicon.href="yellow.svg";
+            } else if (phase === "fun" && Date.now() % 2 === 0) {
+                favicon.href="cyan.svg";
+            } else if (phase === "neutral") {
+                favicon.href="green.svg";
+            } else {
+                favicon.href="Ellipse 1.svg";
+            }
         }
 
         function putRepoData() {
@@ -152,7 +161,7 @@
             })
         }
         
-        setInterval(update, 3000);
+        setInterval(update, 1000);
         setInterval(putRepoData, 10000);
     </script>
 </body>
