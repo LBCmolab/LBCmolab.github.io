@@ -134,7 +134,7 @@
             output = `Is <a class="highlight">${document.title}</a>, and has been for <a class="highlight">${(Math.round(((Date.now()-last)/6000))/10)}</a> muinutes.<br>Total of <a class="highlight">${Math.round(work/6000)/10}</a> muinutes working and <a class="highlight">${Math.round(fun/6000)/10}</a> muinutes off-task.<br>They have spent <a class="highlight">${rate}</a>% of their time off task. (ideal 15-20%)`;
             if ( phase === "work" && Date.now() % 2 === 0 ) {
                 favicon.href="yellow.svg";
-            } else if (phase === "fun" && Date.now() % 2 === 0) {
+            } else if (phase === "fun" && Date.now() % 2000 < 1000) {
                 favicon.href="cyan.svg";
             } else if (phase === "neutral") {
                 favicon.href="green.svg";
