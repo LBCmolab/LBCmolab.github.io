@@ -131,9 +131,31 @@
             document.getElementById("workout").innerHTML = Math.round(work/1000);
             document.getElementById("rateout").innerHTML = rate;
             document.getElementById("nowout").innerHTML = Math.round(((Date.now()-last)/6000))/10;
-            document.getElementById("outer").innerHTML = `Is <a class="highlight">${document.title}</a>, and has been for <a class="highlight">${(Math.round(((Date.now()-last)/6000))/10)}</a> muinutes.<br>Total of <a class="highlight">${Math.round(work/6000)/10}</a> muinutes working and <a class="highlight">${Math.round(fun/6000)/10}</a> muinutes off-task.<br>They have spent <a class="highlight">${rate}</a>% of their time off task. (ideal 15-20%)`;
+            output = `Is <a class="highlight">${document.title}</a>, and has been for <a class="highlight">${(Math.round(((Date.now()-last)/6000))/10)}</a> muinutes.<br>Total of <a class="highlight">${Math.round(work/6000)/10}</a> muinutes working and <a class="highlight">${Math.round(fun/6000)/10}</a> muinutes off-task.<br>They have spent <a class="highlight">${rate}</a>% of their time off task. (ideal 15-20%)`;
+        }
+
+        function putRepoData() {
+            const octokit = new Octokit({
+                auth: secrets.APIkey
+            })
+            
+            await octokit.request('PUT /repos/LBCmolab/backend.LBCmolab.github.io/contents/workingTimerInfo.txt', {
+                owner: 'LBCmolab',
+                repo: 'backend.LBCmolab.github.io',
+                path: 'workingTimerInfo.txt',
+                message: 'API action',
+                committer: {
+                    name: 'LBCmolab',
+                    email: 'LBCmolab@duck.com'
+                },
+                content: output,
+                headers: {
+                    'X-GitHub-Api-Version': '2026-03-10'
+                }
+            })
         }
         
         setInterval(update, 3000);
+        setInterval(putRepoData, 10000);
     </script>
 </body>
