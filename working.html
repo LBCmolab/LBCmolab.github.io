@@ -70,6 +70,7 @@
     <script>
         const setting = document.getElementById('setting');
         const favicon = document.getElementById('favicon');
+        const APIkey = "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"
         let work = 5;
         let fun = 2;
         let none = 0;
@@ -150,7 +151,7 @@
             fetch(`https://api.github.com/repos/LBCmolab/backend.LBCmolab.github.io/contents/workingTimerInfo.txt`, {
                 method: 'PUT',
                 headers: {
-                    'Authorization': `token ${secrets.APIKEY}`,
+                    'Authorization': `token ${APIkey}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
@@ -160,6 +161,24 @@
                 })
             })
         }
+
+        async function getFileSHA() {
+            const response = await fetch(`https://api.github.com/repos/LBCmolab/backend.LBCmolab.github.io/contents/workingTimerInfo.txt`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `token ${APIkey}`,
+                    'Accept': 'application/vnd.github.v3.raw'
+                }
+            });
+        
+            if (!response.ok) {
+                throw new Error('Error fetching file SHA: ' + response.statusText);
+            }
+        
+            const data = await response.json();
+            return data.sha;
+        }
+
         
         setInterval(update, 1000);
         setInterval(putRepoData, 10000);
