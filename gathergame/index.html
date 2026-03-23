@@ -1,0 +1,87 @@
+<html>
+    <head>
+        
+    </head>
+    <body>
+        
+    </body>
+    <script>class Game {
+          constructor() {
+            this.pX = 0.0;
+            this.pHealth = 100.0;
+            this.pStamina = 100.0;
+            this.pHolding = null;
+            this.inside = false;
+            this.items = [];
+            this.train = new Train();
+          }
+        }
+        
+        class Item {
+          // possible names for items
+          static NAMES = {
+            BATTERY: 'battery',
+            BACKUP_BAT: 'backupBat',
+            SPEED_BOOST: 'speedBoost',
+            SCRAP: 'scrap',
+            MED_KIT: 'medKit'
+          };
+        
+          constructor({
+            name = Item.NAMES.SCRAP,
+            power = 0.0,
+            x = 0.0,
+            y = 0.0,
+            inside = false,
+            held
+          } = {}) {
+            this.name = name;
+            this.power = power;
+            this.x = x;
+            this.y = y;
+            this.inside = inside;
+            this.held = false;
+          }
+        }
+        
+        class Train {
+          static POWER_USE = {
+            BTT: 'btt',
+            RTT: 'rtt',
+            RTE: 'rte'
+          };
+        
+          constructor({
+            powerNeed = 0,
+            powerAvail = 0,
+            powerUse = Train.POWER_USE.BTT,
+            d1 = false,
+            d2 = false,
+            d3 = false,
+            canExit = true,
+            timeTillNext = 0.0,
+            bat1 = null,
+            bat2 = null,
+            backupBat = null
+          } = {}) {
+            this.powerNeed = powerNeed;     
+            this.powerAvail = powerAvail;   
+            this.powerUse = powerUse;     
+            this.d1 = d1;
+            this.d2 = d2;
+            this.d3 = d3;
+            this.doors = [this.d1, this.d2, this.d3]; 
+            this.canExit = canExit;
+            this.timeTillNext = timeTillNext;
+            this.bat1 = bat1;               
+            this.bat2 = bat2; 
+            this.backupBat = backupBat;     
+          }
+        
+          // helper to refresh doors array if d1/d2/d3 change
+          refreshDoors() {
+            this.doors = [this.d1, this.d2, this.d3];
+          }
+        }
+    </script>
+</html>
