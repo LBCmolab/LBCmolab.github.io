@@ -1,23 +1,49 @@
 <html>
     <head>
         <style>
+            body {
+                color:#808080;
+            }
             .box {
-                width:330;
-                left:0;
+                width:330px;
+                left:0px;
             }
             .boxHead {
                 background-color:#526666;
                 color:#ffffff;
+                line-height:40px;
+                padding-left:8px;
+                font-size:20px;
             }
             .boxDrop {
                 background-color:#293333;
                 color:#ffffff;
+                padding:20px;
+            }
+            .bar {
+                border-color:#526666;
+                border-style:solid;
+                border-radius:5px;
+                padding:8px;
+                line-height:40px;
+                font-size:14px;
             }
         </style>
     </head>
     <body>
         <div class="box">
-            test
+            <div class="boxHead">
+                Apearance
+            </div>
+            <div class="boxDrop">
+                <div class="bar">
+                    Item 1
+                </div>
+                <div class="bar">
+                    Item 2
+                    Item 3
+                </div>
+            </div>
         </div>
     </body>
     <script>
