@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    	<style>
+        	body {background:#000000;}
+        	span {
+            	font-family:sans-serif;
+            	background:#000000;
+                color:#ffffff;
+                padding:20px;
+                margin:10px;
+                border-radius:20px;
+                display:inline-block;
+                width:100px;
+                text-align:center;
+                border:solid 1px #ffffff;
+            }
+            b {
+            	font-family:sans-serif;
+                font-size:30px;
+                color:#ffffff;
+                border-radius:20px;
+                text-align:center;
+                position:absolute;
+                padding-top:22px;
+                padding-left:20px;
+            }
+            @keyframes flash {
+              0% {background-color:#00ffff;}
+              50% {background-color:#00ffff;}
+              50.1% {background-color:#0000ff;}
+              100% {background-color:#0000ff;}
+            }
+        </style>
+    </head>
+	<body>
+        <div>
+          <span id="tl" onclick="t(-1)">
+              0
+          </span>
+          <span id="tc" onclick="t(0)">
+              0
+          </span>
+          <span id="tr" onclick="t(1)">
+              0
+          </span>
+          <b id="t">0</b>
+        </div>
+        <div style="padding-top:5px;">
+          <span id="bl" onclick="b(-1)">
+              0
+          </span>
+          <span id="bc" onclick="b(0)">
+              0
+          </span>
+          <span id="br" onclick="b(1)">
+              0
+          </span>
+          <b id="b">0</b>
+        </div>
+        <p>am bored | idle | having fun</p>
+        <p>on task | debatable | distracted</p>
+        <script>
+        	const tr = document.getElementById("tr");
+        	const tc = document.getElementById("tc");
+        	const tl = document.getElementById("tl");
+        	const br = document.getElementById("br");
+        	const bc = document.getElementById("bc");
+        	const bl = document.getElementById("bl");
+        	const to = document.getElementById("t");
+        	const bo = document.getElementById("b");
+            var tactive = 0;
+            var tlast = Date.now();
+            var bactive = 0;
+            var blast = Date.now();
+            
+            function t( input ) {
+                var change = tl;
+                if ( tactive === 0 ) {
+                	change = tc;
+                } else if ( tactive === 1 ) {
+                	change = tr;
+                }
+                var next = tl;
+                if ( input === 0 ) {
+                	next = tc;
+                } else if ( input === 1 ) {
+                	next = tr;
+                }
+                
+                const privious = parseInt(change.innerHTML);
+                change.innerHTML = privious + Math.round( ( Date.now() - tlast ) / 1000 );
+                tactive = input;
+                tlast = Date.now();
+                
+                tl.style="";
+                tc.style="";
+                tr.style="";
+                next.style="background-color:#0000ff;";
+            }
+            
+            function b( input ) {
+                var change = bl;
+                if ( bactive === 0 ) {
+                	change = bc;
+                } else if ( bactive === 1 ) {
+                	change = br;
+                }
+                var next = bl;
+                if ( input === 0 ) {
+                	next = bc;
+                } else if ( input === 1 ) {
+                	next = br;
+                }
+                
+                const privious = parseInt(change.innerHTML);
+                change.innerHTML = privious + Math.round( ( Date.now() - blast ) / 1000 );
+                bactive = input;
+                blast = Date.now();
+                
+                bl.style="";
+                bc.style="";
+                br.style="";
+                next.style="background-color:#0000ff;";
+            }
+            
+            t(0);
+            b(0);
+            
+            var x = setInterval( function() { 
+            	to.innerHTML = Math.round( ( Date.now() - tlast ) / 1000 );
+                bo.innerHTML = Math.round( ( Date.now() - blast ) / 1000 );
+            } ,1000);
+        </script>
+    </body>
+</html>
