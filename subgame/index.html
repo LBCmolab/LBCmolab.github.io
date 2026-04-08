@@ -3,12 +3,12 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1">
-        <title>Untitled submersible game.</title>
+        <title>Untitled submersible game</title>
         <style>
             html,body{height:100%;margin:0;overflow:hidden;touch-action:none;user-select:none}
             #stage{position:relative;width:100vw;height:100vh;background:#000;overflow:hidden}
-            #bg{position:absolute;left:50%;top:50%;width:200vw;height:200vh;transform:translate(-50%,-50%);background:url('back.png') center/cover no-repeat;will-change:transform}
-            #ship{position:absolute;left:50%;top:50%;width:96px;height:96px;transform:translate(-50%,-50%);pointer-events:none}
+            #bg{position:absolute;left:50%;top:50%;width:9000px;height:9000px;transform:translate(-50%,-50%);background:url('back.png') center/cover no-repeat;will-change:transform}
+            #ship{position:absolute;left:50%;top:50%;width:87px;height:32px;transform:translate(-50%,-50%);pointer-events:none}
             #overlay{position:absolute;inset:0;pointer-events:none}
             svg{width:100%;height:100%}
             .drag-line{stroke:rgba(255,255,255,0.2);stroke-width:4;stroke-linecap:round}
@@ -22,7 +22,9 @@
         </div>
         
         <script>
-            const stage = document.getElementById('stage'), bg = document.getElementById('bg'), overlay = document.getElementById('overlay');
+            const stage = document.getElementById('stage');
+            const bg = document.getElementById('bg');
+            const overlay = document.getElementById('overlay');
             let vel = {x:0,y:0};
             let pos = {x:0,y:0};
             let dragging = false;
@@ -63,7 +65,8 @@
                     }
                 }
                 pos.x += vel.x * dt; pos.y += vel.y * dt;
-                vel.x *= Math.pow(friction, dt*60); vel.y *= Math.pow(friction, dt*60);
+                vel.x *= Math.pow(friction, dt*60);
+                vel.y *= Math.pow(friction, dt*60);
                 bg.style.transform = `translate(calc(-50% + ${-pos.x}px), calc(-50% + ${-pos.y}px))`;
                 requestAnimationFrame(tick);
             }
