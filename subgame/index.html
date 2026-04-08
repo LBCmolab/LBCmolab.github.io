@@ -1,6 +1,101 @@
+<!doctype html>
 <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Untitled submersible game.</title>
+        <style>
+            html,body{height:100%;margin:0;overflow:hidden;touch-action:none;user-select:none}
+            #stage{position:relative;width:100vw;height:100vh;background:#000;overflow:hidden}
+            #bg{position:absolute;left:50%;top:50%;width:200vw;height:200vh;transform:translate(-50%,-50%);background:url('https://images.unsplash.com/photo-1503264116251-35a269479413?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;will-change:transform}
+            #ship{position:absolute;left:50%;top:50%;width:96px;height:96px;transform:translate(-50%,-50%);pointer-events:none}
+            #overlay{position:absolute;inset:0;pointer-events:none}
+            svg{width:100%;height:100%}
+            .drag-line{stroke:rgba(255,255,255,0.2);stroke-width:4;stroke-linecap:round}
+        </style>
+    </head>
     <body>
-        <img id="visual" src="visual.png" alt="the background" style="position:absolute;left:-2500px;"/>
-        <img id="ship" src="ship.png" alt="the ship" style="position:absolute;left:50vw;top:50vh;"/>
+        <div id="stage">
+            <div id="bg"></div>
+            <img id="ship" src="visual.png" alt="ship">
+            <div id="overlay"></div>
+        </div>
+        
+        <script>
+            const stage = document.getElementById('stage'), bg = document.getElementById('bg'), overlay = document.getElementById('overlay');
+            let vel = {x:0,y:0};
+            let pos = {x:0,y:0};
+            let dragging = false;
+            let start = {x:0,y:0};
+            let cur = {x:0,y:0};
+            const accelScale = 0.01;
+            const friction = 0.995;
+            const maxSpeed = 2000;
+            const now = () => performance.now();
+            let last = now();
+            
+            function getPoint( e ) {
+                if ( e.touches ) {
+                    return { x:e.touches[0].clientX,y:e.touches[0].clientY };
+                }
+                return { x:e.clientX,y:e.clientY }
+            }
+            
+            function renderLine(){
+                if ( !dragging ) {
+                    overlay.innerHTML = '';
+                    return;
+                }
+                overlay.innerHTML = `<svg><line x1="${start.x}" y1="${start.y}" x2="${cur.x}" y2="${cur.y}" class="drag-line"/></svg>`;
+            }
+            
+            function tick( t ) {
+                const dt = Math.min(0.033,(t-last)/1000);
+                last = t;
+                if ( dragging ) {
+                    const dx = cur.x - start.x, dy = cur.y - start.y;
+                    vel.x += dx * accelScale * dt * 60;
+                    vel.y += dy * accelScale * dt * 60;
+                    const s = Math.hypot(vel.x,vel.y);
+                    if ( s > maxSpeed ){
+                        vel.x = vel.x/s*maxSpeed;
+                        vel.y = vel.y/s*maxSpeed;
+                    }
+                }
+                pos.x += vel.x * dt; pos.y += vel.y * dt;
+                vel.x *= Math.pow(friction, dt*60); vel.y *= Math.pow(friction, dt*60);
+                bg.style.transform = `translate(calc(-50% + ${-pos.x}px), calc(-50% + ${-pos.y}px))`;
+                requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+            
+            function down( e ) {
+                e.preventDefault();
+                dragging=true;
+                start=getPoint(e);
+                cur = { ...start };
+                renderLine();
+            }
+            function move( e ) {
+                if ( !dragging ) {
+                    return;
+                }
+                cur=getPoint(e);
+                renderLine();
+            }
+            function up( e ) {
+                dragging=false;
+                renderLine()
+            }
+            
+            stage.addEventListener('mousedown',down);
+            window.addEventListener('mousemove',move);
+            window.addEventListener('mouseup',up);
+            stage.addEventListener('touchstart',e=>{ down(e); },{passive:false});
+            window.addEventListener('touchmove',e=>{ move(e); e.preventDefault(); },{passive:false});
+            window.addEventListener('touchend',e=>{ up(e); },{passive:false});
+            window.addEventListener('resize',()=>{});
+            window.addEventListener('keydown',e=>{ const n=200; if(e.key==='ArrowLeft') vel.x-=n; if(e.key==='ArrowRight') vel.x+=n;if(e.key==='ArrowUp') vel.y-=n; if(e.key==='ArrowDown') vel.y+=n; });
+        </script>
     </body>
 </html>
