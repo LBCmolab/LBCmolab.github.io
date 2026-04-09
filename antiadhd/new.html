@@ -59,7 +59,7 @@
         
         
         <script>
-            navigator.wakeLock.request('screen');
+            let lock = navigator.wakeLock.request();
 
         	const tr = document.getElementById("tr");
         	const tc = document.getElementById("tc");
