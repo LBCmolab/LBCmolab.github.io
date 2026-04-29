@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+    <head> 
+        <link href='http://fonts.googleapis.com/css?family=Roboto Slab' rel='stylesheet' type='text/css'>
+        <style>
+            body {
+                background:#000000;
+                color:#ffffff;
+                font-family:'Roboto Slab';
+            }
+            #main {
+                width:80vw;
+                position:fixed;
+                left:50vw;
+                top:50vh;
+                transform:translate(-50%,-50%);
+            }
+            .important {
+                color:#ffff00;
+                font-weight:bold;
+            }
+            .box {
+                padding:20px;
+                border:2px #ffffff solid;
+                border-radius:10px;
+                margin:20px;
+            }
+            .button {
+                right:45px;
+                position:absolute;
+                cursor:pointer;
+            }
+            h1 {
+                color:#ffff00;
+                text-align:center;
+                font-size:50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <h1>AH3</h1>
+            <div class=box> 
+                <span class="important">Notice</span>
+                <br><br>
+                The page you are atempting to reach is intended for <span class="important">humans only</span>. Please utilize your passcode and review the agreement below to continue.
+            </div>
+            <div class="box">
+                <span class="important">The Agreement</span>
+                <span id="agreeButton" class="button" onclick="hide()">Hide this box</span>
+                <span id="agreeText"><br><br>Before continuing, you must diable any and all functions of your computer that could allow an AI to reach the content of the next page. This includes any exstentsions like gramarly, and even broser or system level things.
+                <br><br>
+                Also, you agree that you will not share the folowing content in any way shape or form. This includes reverse engenearing the page, or screenshotting any part of it.
+                </span>
+            </div>
+            <div class="box">
+                <fourm>
+                    <input required type="password" placeholder="Enter your AH3 password here">
+                    <br>
+                    <input required type="checkbox">I have read the document above and agree to be bound by its terms
+                    <br>
+                    <input type="submit">
+                </fourm>
+            </div>
+        </div>
+        <script>
+            function param(name, url = window.location.href) {
+                name = name.replace(/[\[\]]/g, '\\$&');
+                var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            }
+            function hide() {
+                var button = document.getElementById("agreeButton");
+                var agree = document.getElementById("agreeText");
+                button.innerHTML = "Box is hidden"
+                button.style.color = "#808080"
+                agree.style.display = "none"
+            }
+        </script>
+    </body>
+</html>
