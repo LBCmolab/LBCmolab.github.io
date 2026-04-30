@@ -27,7 +27,7 @@
             }
             .button {
                 cursor:pointer;
-                color:#80ffff;
+                animation:1s flash infinite linear;
             }
             h1 {
                 color:#ffff00;
@@ -41,6 +41,11 @@
                 padding:none;
                 margin:none;
                 font-size:inherit;
+            }
+            @keyframes flash {
+                0%   { color:#00ffff; }
+                50%  { color:#ffffff; }
+                100% { color:#00ffff; }
             }
         </style>
     </head>
@@ -71,7 +76,7 @@
                     <input type="submit" class="button" onclick="test()">
                 </fourm>
                 <br>
-                <span class="button" onclick="document.location='https://www.duckduckgo.com/?q=get+a+new+password'">Dont have a password? Get a new password.</span>
+                <span class="button" onclick="document.location='https://www.duckduckgo.com/?q=how+to+get+a+life'">Dont have a password? Get a new password.</span>
             </div>
         </div>
         <script>
