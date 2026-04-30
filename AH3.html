@@ -1,12 +1,13 @@
 <!DOCTYPE HTML>
 <html>
     <head> 
-        <link href='http://fonts.googleapis.com/css?family=Roboto Slab' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
         <style>
             body {
                 background:#000000;
                 color:#ffffff;
-                font-family:'Roboto Slab';
+                font-family:sans-serif,'Roboto';
+                transition: color 5s;
             }
             #main {
                 width:80vw;
@@ -26,14 +27,21 @@
                 margin:20px;
             }
             .button {
-                right:45px;
-                position:absolute;
                 cursor:pointer;
+                color:#80ffff;
             }
             h1 {
                 color:#ffff00;
                 text-align:center;
                 font-size:50px;
+            }
+            input {
+                border:none;
+                background:inherit;
+                color:#ffffff;
+                padding:none;
+                margin:none;
+                font-size:inherit;
             }
         </style>
     </head>
@@ -45,22 +53,26 @@
                 <br><br>
                 The page you are atempting to reach is intended for <span class="important">humans only</span>. Please utilize your passcode and review the agreement below to continue.
             </div>
-            <div class="box">
+            <div class="box" id="agree">
                 <span class="important">The Agreement</span>
-                <span id="agreeButton" class="button" onclick="hide()">Hide this box</span>
-                <span id="agreeText"><br><br>Before continuing, you must diable any and all functions of your computer that could allow an AI to reach the content of the next page. This includes any exstentsions like gramarly, and even broser or system level things.
+                <div style="transition:font-size 2s, color 2s;positon:fixed;"><br>Before continuing, you must diable any and all functions of your computer that could allow an AI to reach the content of the next page. This includes any brouser extensions like gramarly, and even brouser or system level things such as copilot.
                 <br><br>
-                Also, you agree that you will not share the folowing content in any way shape or form. This includes reverse engenearing the page, or screenshotting any part of it.
-                </span>
+                Also, you agree that you will not share the folowing content in any way shape or form. This includes reverse engineering the page, or taking a screeenshot or picture of any part of it. What is on the folowing page, stays there.
+                <br><br>
+                Appon breach of this agreement, you will be subject to pay damages to the owners of the page, including intangable damages for things such as privacy, reguardless of copyright or any other pre-existing law.
+                </div>
+                <br>
+                <span class="button" onclick="hide()">I have read the agreement above, and agree to be bound to its terms.</span>
             </div>
-            <div class="box">
-                <fourm>
-                    <input required type="password" placeholder="Enter your AH3 password here">
-                    <br>
-                    <input required type="checkbox">I have read the document above and agree to be bound by its terms
-                    <br>
-                    <input type="submit">
+            <div class="box" id="pass" style="display:none">
+            	<span id="result">Enter your passphrase</span>
+                <br><br>
+                <fourm style="display:flex">
+                	<input required type="password" style="padding:5px;border:2px #ffffff solid;border-radius:10px;width:50%;">
+                    <input type="submit" class="button" onclick="test()">
                 </fourm>
+                <br>
+                <span class="button">Dont have a password? Get a new password.</span>
             </div>
         </div>
         <script>
@@ -73,11 +85,15 @@
                 return decodeURIComponent(results[2].replace(/\+/g, ' '));
             }
             function hide() {
-                var button = document.getElementById("agreeButton");
-                var agree = document.getElementById("agreeText");
-                button.innerHTML = "Box is hidden"
-                button.style.color = "#808080"
-                agree.style.display = "none"
+                var pass = document.getElementById("pass");
+                var agree = document.getElementById("agree");
+                agree.style.display = "none";
+                pass.style.display = "inherit";
+            }
+            function test() {
+            	var out = document.getElementById("result");
+                out.innerHTML = "Not a passphrase. Try again.";
+                out.style.color = "#ff8080";
             }
         </script>
     </body>
