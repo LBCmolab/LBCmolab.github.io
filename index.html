@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+    <head> 
+        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+        <style>
+            body {
+                background:#000000;
+                color:#ffffff;
+                font-family:sans-serif,'Roboto';
+            }
+            #main {
+                width:80vw;
+                position:fixed;
+                left:50vw;
+                top:50vh;
+                transform:translate(-50%,-50%);
+            }
+            .important {
+                color:#ffff00;
+                font-weight:bold;
+            }
+            .box {
+                padding:20px;
+                border:2px #ffffff solid;
+                border-radius:10px;
+                margin:20px;
+            }
+            .button {
+                cursor:pointer;
+                animation:3s flash infinite linear;
+            }
+            h1 {
+                color:#ffff00;
+                text-align:center;
+                font-size:50px;
+            }
+            input {
+                border:none;
+                background:inherit;
+                color:#ffffff;
+                padding:none;
+                margin:none;
+                font-size:inherit;
+            }
+            @keyframes flash {
+                0%   { color:#00ffff; }
+                50%  { color:#ffffff; }
+                100% { color:#00ffff; }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <h1>WARNING!</h1>
+            <div class=box> 
+                <span class="important">Important notice:</span>
+                <br><br>
+                The page you are atempting to reach is intended for humans only, <span class="important">NO AI</span>. You must agree to the terms below to continue. By utilizing any part of this website, you confirm that you have read and agree to be bound to the terms below.
+            </div>
+            <div class="box" id="agree">
+                <span class="important">Terms of Use</span>
+                <div style="transition:font-size 2s, color 2s;positon:fixed;"><br>Before continuing, you must diable any and all functions of your computer that could allow an AI to reach the content of the next page. This includes any brouser extensions like gramarly, and even brouser or system level things such as copilot or gemini.
+                <br><br>
+                Also, you agree that you will not share the folowing content in any way shape or form. This includes reverse engineering the page, or taking a screeenshot or picture of any part of it. This also includes taking part of the code via the inspect tool.
+                <br><br>
+                Appon breach of this agreement, you will be subject to pay damages to the owners of this page, including intangable damages for things such as privacy, reguardless of copyright or any other pre-existing law.
+                </div>
+                <br>
+                <span class="button" onclick="document.location='https://lbcmolab.github.io/aboutme/index.html'">I have read the terms above, and agree to be bound to its terms.</span>
+            </div>
+        </div>
+    </body>
+</html>
