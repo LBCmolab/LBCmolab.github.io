@@ -44,7 +44,6 @@
             </div>
         </div>
         <script>
-            import { setTimeout } from "timers/promises";
             function async tick() {
                 bar = document.getElementById("timerbar");
                 timer = document.getElementById("timeleft");
@@ -57,7 +56,7 @@
                 } else {
                     bar.style = "width:" + ( time-1 ) + "px;";
                     timer.textContent = time-1;
-                    await setTimeout(1);
+                    await setTimeout(function() {}, 1);
                     tick();
                 }
             }
