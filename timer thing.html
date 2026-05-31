@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <style>
+            #main {
+                border:2px solid;
+                border-radius:5px;
+                padding:15px;
+                position:fixed;
+                left:50vw;
+                top:50vh;
+                transform:translate(-50%,-50%);
+            }
+            .title {
+                margin-bottom:5px;
+                text-align:center;
+                font-size:20px;
+            }
+            #timerbox {
+                border:2px solid;
+                border-radius:15px;
+                width:420px;
+            }
+            #timerbar {
+                width=200px;
+                background-color:lightgray;
+                border-radius:15px;
+                height:20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <div class="title" id="title">
+                Phase 1 - Trading and station upgrades
+            </div>
+            <div class="title">
+                <span id="timeleft">420</span> seconds remaining in this phase.
+            </div>
+            <div id="timerbox">
+                <div id="timerbar">
+                    
+                </div>
+            </div>
+        </div>
+        <script>
+            import { setTimeout } from "timers/promises";
+            function async tick() {
+                bar = document.getElementById("timerbar");
+                timer = document.getElementById("timeleft");
+                title = document.getElementById("title");
+                time = Number(timer.textContent);
+                if ( time === 1 ) {
+                    bar.style = "width:420px;background-color:red;";
+                    timer.textContent = "No";
+                    title.textContent = "Phase one finished. Start phase two.";
+                } else {
+                    bar.style = "width:" + ( time-1 ) + "px;";
+                    timer.textContent = time-1;
+                    await setTimeout(1);
+                    tick();
+                }
+            }
+            tick();
+        </script>
+    </body>
+</html>
