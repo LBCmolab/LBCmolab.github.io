@@ -113,9 +113,11 @@
         const tick = setInterval(() => {
             if ( up ) t++; else t--;
 
+            navigator.wakeLock.request('screen');
+            
             time.textContent = Math.round((Math.abs(t) + 30) / 60);
 
-            // done: 0% -> 100%
+            // done is the persentage finished
             const done = (total - t) / total;
             bar.style.strokeDashoffset = C * (1 - done);
 
